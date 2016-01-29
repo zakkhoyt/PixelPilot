@@ -5,6 +5,10 @@
 //  Created by Zakk Hoyt on 1/29/16.
 //  Copyright © 2016 Zakk Hoyt. All rights reserved.
 //
+//  This app will load an image, resize it to 16x16, then send each pixel's RGB (from 0 - 255) to an arduino which will use
+//  https://github.com/adafruit/Adafruit_NeoPixel
+//  Using serial cocoapod here
+//  https://github.com/armadsen/ORSSerialPort
 
 import Cocoa
 
@@ -15,16 +19,39 @@ class ViewController: NSViewController {
     @IBOutlet weak var imageButton: NSButton!
     @IBOutlet weak var imageLabel: NSTextField!
     @IBOutlet weak var imageWell: NSImageView!
-    private var imageURL: NSURL? = nil
     
+    private var imageURL: NSURL? = nil
+    private var serialPorts = [ORSSerialPort]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        scanSerialPorts()
     }
 
     override var representedObject: AnyObject? {
         didSet {
         // Update the view, if already loaded.
+        }
+    }
+    
+    private func scanSerialPorts() {
+        // See how to use here:
+        
+        // Serial ports
+        serialPorts.removeAll()
+        let ports = ORSSerialPortManager.sharedSerialPortManager().availablePorts
+        for port in ports{
+            print("port: " + port.name)
+            serialPorts.append(port)
+        }
+
+        // UI
+        serialComboBox.removeAllItems()
+        for port in serialPorts {
+            serialComboBox.addItemWithObjectValue(port.name)
+        }
+        if serialPorts.count > 0 {
+            serialComboBox.selectItemAtIndex(0)
         }
     }
 
@@ -40,8 +67,6 @@ class ViewController: NSViewController {
         
         if let failureReason = failureReason {
             userInfo[NSLocalizedFailureReasonErrorKey] = failureReason
-        } else {
-//            userInfo[NSLocalizedFailureReasonErrorKey] = "Undefined"
         }
         
         
@@ -51,7 +76,7 @@ class ViewController: NSViewController {
     }
     
     private func displayError(error: NSError) {
-        
+        print("Error: " + error.localizedDescription)
         
         let alert = NSAlert()
         alert.messageText = error.localizedDescription
@@ -110,13 +135,62 @@ class ViewController: NSViewController {
 
     
     @IBAction func sendButtonAction(sender: AnyObject) {
+        if serialPorts.count == 0 {
+            return
+        }
+        
+
+        let port = serialPorts[serialComboBox.indexOfSelectedItem] // ORSSerialPort
+        port.baudRate = 9600;
+        port.parity = .None;
+        port.numberOfStopBits = 1;
+        port.usesRTSCTSFlowControl = true;
+        port.delegate = self
+
+        // send one pixel of dat
+        let string = "r:255|g:128|b:64\n"
+        if let data = string .dataUsingEncoding(NSUTF8StringEncoding) {
+            port.sendData(data)
+        } else {
+            let de = error("Failed to send data", failureReason: "Could not create data from string")
+            displayError(de)
+        }
+        
+        let image = imageWell.image
+        let rawImage = NSBitmapImageRep(data: (image?.TIFFRepresentation)!)
+        for y in 15.stride(to: -1, by: -1) {
+            for x in 0..<16 {
+                let color = rawImage?.colorAtX(x, y: y)
+                if let red = color?.redComponent, green = color?.greenComponent, blue = color?.blueComponent {
+                    let r = UInt(red * 255)
+                    let g = UInt(green * 255)
+                    let b = UInt(blue * 255)
+                    
+                    
+                    let string = ("x:\(x)|y:\(y)|r:\(r)|g:\(g)|b:\(b)")
+                    let outputString = string + "\n"
+                    print("sending: " + string)
+                    if let data = outputString .dataUsingEncoding(NSUTF8StringEncoding) {
+                        port.sendData(data)
+                    } else {
+                        print("Could not create pixel string for " + outputString)
+                    }
+                }
+            }
+        }
     }
-    
     
     @IBAction func serialComboAction(sender: AnyObject) {
+        
     }
-    
-    
-    
+}
+
+
+extension ViewController: ORSSerialPortDelegate {
+    func serialPortWasRemovedFromSystem(serialPort: ORSSerialPort) {
+        let de = error("Disconnected", failureReason: "Serial port was removed from system")
+        displayError(de)
+        scanSerialPorts()
+    }
 }
 

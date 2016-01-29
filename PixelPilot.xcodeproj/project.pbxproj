@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1361E7DBC2F5C2741850DCE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A49B54CC384413BB2D1223 /* libPods.a */; };
 		C606130F1C5C0555003800EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C606130E1C5C0555003800EB /* AppDelegate.swift */; };
 		C60613111C5C0555003800EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60613101C5C0555003800EB /* ViewController.swift */; };
 		C60613131C5C0555003800EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C60613121C5C0555003800EB /* Assets.xcassets */; };
@@ -33,6 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04A49B54CC384413BB2D1223 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FD8BDA9E5483B4F0DDDAD41 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		5AC09B426A8F5856967C164B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C606130B1C5C0555003800EB /* PixelPilot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixelPilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C606130E1C5C0555003800EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C60613101C5C0555003800EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +49,7 @@
 		C60613271C5C0555003800EB /* PixelPilotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PixelPilotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C606132B1C5C0555003800EB /* PixelPilotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPilotUITests.swift; sourceTree = "<group>"; };
 		C606132D1C5C0555003800EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C60613391C5C1129003800EB /* PixelPilot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PixelPilot-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1361E7DBC2F5C2741850DCE4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +78,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6930E37561E7572533295E4B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5AC09B426A8F5856967C164B /* Pods.debug.xcconfig */,
+				3FD8BDA9E5483B4F0DDDAD41 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C60613021C5C0555003800EB = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +94,8 @@
 				C606131F1C5C0555003800EB /* PixelPilotTests */,
 				C606132A1C5C0555003800EB /* PixelPilotUITests */,
 				C606130C1C5C0555003800EB /* Products */,
+				6930E37561E7572533295E4B /* Pods */,
+				F0C85EA10738DE09DC4F7962 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +117,7 @@
 				C60613121C5C0555003800EB /* Assets.xcassets */,
 				C60613141C5C0555003800EB /* Main.storyboard */,
 				C60613171C5C0555003800EB /* Info.plist */,
+				C60613391C5C1129003800EB /* PixelPilot-Bridging-Header.h */,
 			);
 			path = PixelPilot;
 			sourceTree = "<group>";
@@ -122,6 +140,14 @@
 			path = PixelPilotUITests;
 			sourceTree = "<group>";
 		};
+		F0C85EA10738DE09DC4F7962 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				04A49B54CC384413BB2D1223 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -129,9 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C60613301C5C0555003800EB /* Build configuration list for PBXNativeTarget "PixelPilot" */;
 			buildPhases = (
+				241D7721DC82D98167E637FE /* Check Pods Manifest.lock */,
 				C60613071C5C0555003800EB /* Sources */,
 				C60613081C5C0555003800EB /* Frameworks */,
 				C60613091C5C0555003800EB /* Resources */,
+				33B764B1F730B0ED63E8464C /* Embed Pods Frameworks */,
+				181B283D66FBAC9757032C82 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -246,6 +275,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		181B283D66FBAC9757032C82 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		241D7721DC82D98167E637FE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		33B764B1F730B0ED63E8464C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C60613071C5C0555003800EB /* Sources */ = {
@@ -382,25 +459,32 @@
 		};
 		C60613311C5C0555003800EB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AC09B426A8F5856967C164B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = PixelPilot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vaporwarewolf.PixelPilot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PixelPilot/PixelPilot-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		C60613321C5C0555003800EB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FD8BDA9E5483B4F0DDDAD41 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = PixelPilot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vaporwarewolf.PixelPilot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PixelPilot/PixelPilot-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -475,6 +559,7 @@
 				C60613321C5C0555003800EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C60613331C5C0555003800EB /* Build configuration list for PBXNativeTarget "PixelPilotTests" */ = {
 			isa = XCConfigurationList;
@@ -483,6 +568,7 @@
 				C60613351C5C0555003800EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C60613361C5C0555003800EB /* Build configuration list for PBXNativeTarget "PixelPilotUITests" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +577,7 @@
 				C60613381C5C0555003800EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -690,7 +690,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="941-Ae-f5b" secondAttribute="height" multiplier="1:1" id="FIy-c9-M0J"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" image="facebook" id="GIa-tP-xmi"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" image="zakk" id="GIa-tP-xmi"/>
                             </imageView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FH3-cv-FJl">
                                 <rect key="frame" x="395" y="13" width="71" height="32"/>
@@ -759,6 +759,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="facebook" width="200" height="200"/>
+        <image name="zakk" width="128" height="128"/>
     </resources>
 </document>
