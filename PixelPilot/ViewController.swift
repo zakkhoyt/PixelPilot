@@ -111,6 +111,7 @@ class ViewController: NSViewController {
     
     @IBAction func imageButtonAction(sender: AnyObject) {
         let panel = NSOpenPanel()
+        panel.allowedFileTypes = [kUTTypeImage as String]
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
@@ -133,6 +134,23 @@ class ViewController: NSViewController {
         }
     }
 
+    @IBAction func refreshButtonAction(sender: AnyObject) {
+        scanSerialPorts()
+    }
+    
+    @IBAction func aboutButtonAction(sender: AnyObject) {
+        let alert = NSAlert()
+        alert.messageText = "How to use:"
+        alert.informativeText = "The loaded image is resized to 16x16. When you tap send, a connection is made to the arduino at 9600 baud. Pixel data is sent starting from the bottom left each row at a time.\n" +
+            "This is an example string for the bottom left pixel (first one):\n" +
+            "x:0|y:15|r:255|g:255|b:255\\n\n" +
+            "Use string tokenizers to parse the data and then clock it out to neopixel"
+        
+
+        alert.addButtonWithTitle("Okay")
+        alert.runModal()
+
+    }
     
     @IBAction func sendButtonAction(sender: AnyObject) {
         if serialPorts.count == 0 {
