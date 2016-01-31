@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PixelPilot/ViewController.swift"
-            timestampString = "475795080.877498"
+            timestampString = "475801465.802508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "imageButtonAction(_:)"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "serialComboAction(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
