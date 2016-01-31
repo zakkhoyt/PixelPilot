@@ -141,7 +141,7 @@ class ViewController: NSViewController {
     @IBAction func aboutButtonAction(sender: AnyObject) {
         let alert = NSAlert()
         alert.messageText = "How to use:"
-        alert.informativeText = "The loaded image is resized to 16x16. When you tap send, a connection is made to the arduino at 9600 baud. Pixel data is sent starting from the bottom left each row at a time.\n" +
+        alert.informativeText = "The loaded image is resized to 16x16. When you tap send, a connection is made to the arduino at 57600 baud. Pixel data is sent starting from the bottom left each row at a time.\n" +
             "This is an example string for the bottom left pixel (first one):\n" +
             "x:0|y:15|r:255|g:255|b:255\\n\n" +
             "Use string tokenizers to parse the data and then clock it out to neopixel"
@@ -159,20 +159,20 @@ class ViewController: NSViewController {
         
 
         let port = serialPorts[serialComboBox.indexOfSelectedItem] // ORSSerialPort
-        port.baudRate = 9600;
+        port.baudRate = 57600;
         port.parity = .None;
         port.numberOfStopBits = 1;
         port.usesRTSCTSFlowControl = true;
         port.delegate = self
 
-        // send one pixel of dat
-        let string = "r:255|g:128|b:64\n"
-        if let data = string .dataUsingEncoding(NSUTF8StringEncoding) {
-            port.sendData(data)
-        } else {
-            let de = error("Failed to send data", failureReason: "Could not create data from string")
-            displayError(de)
-        }
+//        // send one pixel of data
+//        let string = "x:0|y:0|r:0|g:255|b:0\n"
+//        if let data = string .dataUsingEncoding(NSUTF8StringEncoding) {
+//            port.sendData(data)
+//        } else {
+//            let de = error("Failed to send data", failureReason: "Could not create data from string")
+//            displayError(de)
+//        }
         
         let image = imageWell.image
         let rawImage = NSBitmapImageRep(data: (image?.TIFFRepresentation)!)
