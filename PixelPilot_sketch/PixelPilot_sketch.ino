@@ -33,15 +33,16 @@ void loop(){
   delay(10);
 }
 
-void pushColor(int r, int g, int b) {
+void pushColor(int x, int y, int r, int g, int b) {
+  uint32_t index = y * 16 + x;
   uint32_t color = strip.Color(r, g, b);
+  strip.setPixelColor(index, color);
+  strip.show();
 }
 
 void parseSerialString() {
   if(g_serialString.length() > 0) {
 
-    
-    
     // Command strings will look like:
     // x:7|y:2|r:234|g:188|b:164
     
@@ -109,7 +110,7 @@ void parseSerialString() {
     g_serialString = "";
 
     // Send color to LED grid
-    pushColor(r, g, b);
+    pushColor(x, y, r, g, b);
     
   }
 }
