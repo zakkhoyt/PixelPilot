@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     private var serialPorts = [ORSSerialPort]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadImage(NSURL(string: "")!)
         scanSerialPorts()
     }
     
@@ -95,8 +95,14 @@ class ViewController: NSViewController {
             smallImage = self.resizeImage(image)
             imageWell.image = smallImage
         } else {
-            let alertError = error("Could not load image from URL", failureReason: nil)
-            displayError(alertError)
+            if let image = NSImage(named: "test") {
+                let resizedImage = self.resizeImage(image)
+                smallImage = resizedImage
+                imageWell.image = smallImage
+            } else {
+                let alertError = error("Could not load image from URL", failureReason: nil)
+                displayError(alertError)
+            }
         }
     }
     
@@ -161,64 +167,69 @@ class ViewController: NSViewController {
         }
         
         
-        //        let port = serialPorts[serialComboBox.indexOfSelectedItem] // ORSSerialPort
+        let port = serialPorts[serialComboBox.indexOfSelectedItem] // ORSSerialPort
         //        if let port = ORSSerialPort(path: "/dev/cu.usbmodem1411") {
-        if let port = self.port {
-            port.open()
-            port.baudRate = 115200
-            port.parity = .None
-            port.numberOfStopBits = 1
-            port.usesRTSCTSFlowControl = false
-            port.usesDTRDSRFlowControl = false
-            port.usesDCDOutputFlowControl = false
-            port.delegate = self
-            
-//            // send one pixel of data
-//            let string = "x:0|y:0|r:255|g:0|b:0\n"
-//            if let data = string .dataUsingEncoding(NSUTF8StringEncoding) {
-//                print("port.name: " + string)
-//                port.sendData(data)
-//            } else {
-//                let de = error("Failed to send data", failureReason: "Could not create data from string")
-//                displayError(de)
-//            }
-            
-            let string = "reset\n"
-            if let flushData = string.dataUsingEncoding(NSUTF8StringEncoding) {
-                port.sendData(flushData)
-                usleep(500 * 1000)
-                port.sendData(flushData)
-                usleep(1000 * 1000)
-            }
-            
-            
-            let image = imageWell.image
-            let rawImage = NSBitmapImageRep(data: (image!.TIFFRepresentation)!)
-            for y in 0.stride(to: -1, by: -1) {
-//            for y in 5...5 {
-                for x in 0..<16 {
-                    let color = rawImage?.colorAtX(x, y: 15 - y)
-//                    rawImage?.setColor(NSColor.greenColor(), atX: x, y: y)
-                    if let red = color?.redComponent, green = color?.greenComponent, blue = color?.blueComponent {
-                        let factor = CGFloat(0.25)
-                        let r = UInt(red * 255 * factor)
-                        let g = UInt(green * 255 * factor)
-                        let b = UInt(blue * 255 * factor)
-                        
-                        
-                        let string = ("x:\(x)|y:\(y)|r:\(r)|g:\(g)|b:\(b)")
-                        let outputString = string + "\n"
-                        print("sending: " + string)
-                        if let data = outputString .dataUsingEncoding(NSUTF8StringEncoding) {
-                            port.sendData(data)
-                            usleep(50 * 1000)
-                        } else {
-                            print("Could not create pixel string for " + outputString)
-                        }
+        //        if let port = self.port {
+        port.open()
+        port.baudRate = 115200
+        port.parity = .None
+        port.numberOfStopBits = 1
+        port.usesRTSCTSFlowControl = false
+        port.usesDTRDSRFlowControl = false
+        port.usesDCDOutputFlowControl = false
+        port.delegate = self
+        
+        //            // send one pixel of data
+        //            let string = "x:0|y:0|r:255|g:0|b:0\n"
+        //            if let data = string .dataUsingEncoding(NSUTF8StringEncoding) {
+        //                print("port.name: " + string)
+        //                port.sendData(data)
+        //            } else {
+        //                let de = error("Failed to send data", failureReason: "Could not create data from string")
+        //                displayError(de)
+        //            }
+        
+        let string = "reset\n"
+        if let flushData = string.dataUsingEncoding(NSUTF8StringEncoding) {
+            port.sendData(flushData)
+            usleep(500 * 1000)
+            port.sendData(flushData)
+            usleep(1000 * 1000)
+        }
+        
+//        http://stackoverflow.com/questions/19649069/extracting-rgb-data-from-bitmapdata-nsbitmapimagerep-cocoa
+        let image = smallImage
+        print("image.size: \(image?.size.width)x\(image?.size.height)")
+        let rawImage = NSBitmapImageRep(data: (image!.TIFFRepresentation)!)
+        print("rawImage.size: \(rawImage?.size.width)x\(rawImage?.size.height)")
+        for y in 15.stride(to: -1, by: -1) {
+            for x in 0..<16 {
+                let color = rawImage?.colorAtX(x, y: 15 - y)
+                rawImage?.setColor(NSColor.greenColor(), atX: x, y: y)
+                if let red = color?.redComponent, green = color?.greenComponent, blue = color?.blueComponent {
+                    let factor = CGFloat(1.0)
+                    let r = UInt(red * 255 * factor)
+                    let g = UInt(green * 255 * factor)
+                    let b = UInt(blue * 255 * factor)
+                    
+                    
+                    let string = ("x:\(x)|y:\(y)|r:\(r)|g:\(g)|b:\(b)")
+                    let outputString = string + "\n"
+                    print("sending: " + string)
+                    if let data = outputString .dataUsingEncoding(NSUTF8StringEncoding) {
+                        port.sendData(data)
+
+                    } else {
+                        print("Could not create pixel string for " + outputString)
                     }
                 }
             }
+            //            }
         }
+        
+        //NSImage *image = [[NSImage alloc] initWithCGImage:[bitmapRep CGImage] size:NSMakeSize(width,height)];
+        let i = NSImage(CGImage: (rawImage?.CGImage)!, size: (rawImage?.size)!)
+        imageWell.image = i
     }
     
     @IBAction func serialComboAction(sender: AnyObject) {
